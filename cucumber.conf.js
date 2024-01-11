@@ -6,7 +6,8 @@ const {
     setDefaultTimeout,
   } = require("@cucumber/cucumber");
   const { chromium } = require("playwright");
-  
+  const { cleanUpTempFiles } = require('./tests/acceptance/testHelper/helper.js')
+
   setDefaultTimeout(60000);
   BeforeAll(async function () {
     global.browser = await chromium.launch({
@@ -28,4 +29,5 @@ const {
   After(async function () {
     await global.page.close();
     await global.context.close();
+    await cleanUpTempFiles();
   });

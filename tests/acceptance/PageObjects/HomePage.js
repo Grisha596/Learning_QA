@@ -1,3 +1,5 @@
+const { filesToDelete } = require('../testHelper/helper.js');
+
 class HomePage {
     constructor() {
         this.newFileSelector = `//button[@ aria-label="New file"]`
@@ -17,6 +19,7 @@ class HomePage {
         await page.fill(this.textFieldSelector,text)
         await page.click(this.saveButtonSelector)
         await page.click(this.closeButtonSelector)
+        filesToDelete.push(fileName)
     }
 }
 module.exports = HomePage
