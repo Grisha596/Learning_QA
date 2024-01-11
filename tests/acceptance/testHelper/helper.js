@@ -2,7 +2,6 @@ const axios = require('axios')
 
 async function getXauthToken() {
     try {
-
         const res = await axios.post('http://localhost:8080/api/login', {
             username: 'admin',
             password: 'admin'
@@ -11,7 +10,6 @@ async function getXauthToken() {
     } catch (error) {
         console.error("Error requesting acces token:", error);
     }
-
 }
 
 const filesToDelete = []
@@ -40,8 +38,14 @@ async function cleanUpTempFiles() {
     }
 }
 
+function swapFileOnRename(oldfileName, newfileName) {
+    const fileToSwapIndex = filesToDelete.findIndex((file) => file == oldfileName);
+    filesToDelete[fileToSwapIndex] = newfileName;
+}
+
 module.exports = {
     deleteFile,
     cleanUpTempFiles,
-    filesToDelete
+    filesToDelete,
+    swapFileOnRename
 }

@@ -1,4 +1,5 @@
-const { filesToDelete } = require('../testHelper/helper.js');
+const { filesToDelete, swapFileOnRename } = require('../testHelper/helper.js');
+const util = require("util")
 
 class HomePage {
     constructor() {
@@ -9,7 +10,8 @@ class HomePage {
         this.saveButtonSelector = `//button[@aria-label="Save"]`
         this.closeButtonSelector = `//button[@aria-label="Close"]`
         this.fileNameSelector = `//div[@aria-label="%s"]`
-
+        this.renameIconSelector='//button[@title="Rename"]'
+        this.renameButtonSelector='//button[@type="submit"]'
     }
 
     async createFile(fileName,text){
@@ -21,5 +23,14 @@ class HomePage {
         await page.click(this.closeButtonSelector)
         filesToDelete.push(fileName)
     }
+
+    async renameFile(oldFileName, newFileName){
+        swapFileOnRename(oldFileName, newFileName);
+        await page.click(util.format(this.fileNameSelector, oldFileName))
+        await page.click(this.renameIconSelector)
+        await page.fill(this.fieldSelector, newFileName)
+        await page.click(this.renameButtonSelector)
+    }
+
 }
 module.exports = HomePage
