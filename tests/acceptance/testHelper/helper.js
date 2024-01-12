@@ -8,7 +8,7 @@ async function getXauthToken() {
         })
         return res.data
     } catch (error) {
-        console.error("Error requesting acces token:", error);
+        console.error("Error requesting access token:", error);
     }
 }
 
